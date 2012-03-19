@@ -18,9 +18,9 @@ use warnings;
 
 use Storable;
 
-#Copy post-fm approach
+# Copy post-fm approach
 
-#Globals
+# Globals
 our %rc = (
 	cache => "$ENV{HOME}/.cmus/last-cache"
 );
@@ -30,10 +30,10 @@ our $tracks = [];
 # Read in the Storable cache file
 $tracks = retrieve($rc{cache}) if -r $rc{cache};
 
-# Open an output file
+# Open an output file for librefm
 open FILE, "> librefmimport.txt" or die "Cannot open output.txt: $!";
 
-#Loop through the list of tracks, export tab separated values
+# Loop through the list of tracks, export tab separated values
 for my $track (@{$tracks}) {
 	my %track = %{$track};
 	#           DateTime              Track Name           Artist               Album      trackmbid artistmbid albummbid
@@ -42,3 +42,22 @@ for my $track (@{$tracks}) {
 }
 
 close FILE; 
+
+# Open an output file for lastfm
+open FILE, "> lastfmimport.txt" or die "Cannot open output.txt: $!";
+
+# Print headers
+print FILE ("#AUDIOSCROBBLER/1.1\n");
+print FILE ("#TZ/UTC\n");
+print FILE ("#CLIENT/CMUS post-fm\n");
+
+# Loop through the list of tracks, export tab separated values
+for my $track (@{$tracks}) {
+	my %track = %{$track};
+	#            Artist                 Album          Track Name        Track No.  Song Dur. Rating     Timestamp        trackmbid
+	print FILE ($track{"a"} . "\t" . $track{"b"} . "\t" . $track{"t"} . "\t" .  "\t"  .  "\t"  .  "\t"  . $track{"i"} . "\t" . "\n");
+
+}
+
+close FILE; 
+
