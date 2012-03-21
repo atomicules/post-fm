@@ -54,8 +54,8 @@ print FILE ("#CLIENT/CMUS post-fm\n");
 # Loop through the list of tracks, export tab separated values
 for my $track (@{$tracks}) {
 	my %track = %{$track};
-	#            Artist                 Album          Track Name        Track No.  Song Dur. Rating     Timestamp        trackmbid
-	print FILE ($track{"a"} . "\t" . $track{"b"} . "\t" . $track{"t"} . "\t" .  "\t"  .  "\t"  .  "\t"  . $track{"i"} . "\t" . "\n");
+	#            Artist                 Album          Track Name        Track No.      Song Dur.          Rating          Timestamp        trackmbid
+	print FILE ($track{"a"} . "\t" . $track{"b"} . "\t" . $track{"t"} . "\t" .  "\t"  . $track{"l"} . "\t" . "L" .  "\t"  . $track{"i"} . "\t" . "\n");
 
 }
 
