@@ -30,21 +30,8 @@ our $tracks = [];
 # Read in the Storable cache file
 $tracks = retrieve($rc{cache}) if -r $rc{cache};
 
-# Open an output file for librefm
-open FILE, "> librefmimport.txt" or die "Cannot open output.txt: $!";
-
-# Loop through the list of tracks, export tab separated values
-for my $track (@{$tracks}) {
-	my %track = %{$track};
-	#           DateTime              Track Name           Artist               Album      trackmbid artistmbid albummbid
-	print FILE ($track{"i"} . "\t" . $track{"t"} . "\t" . $track{"a"} . "\t" . $track{"b"} . "\t" .    "\t" .     "\t" . "\n");
-
-}
-
-close FILE; 
-
-# Open an output file for lastfm
-open FILE, "> lastfmimport.txt" or die "Cannot open output.txt: $!";
+# Open an output file for scrobble.log format
+open FILE, "> scrobble.log" or die "Cannot open scrobble.log: $!";
 
 # Print headers
 print FILE ("#AUDIOSCROBBLER/1.1\n");
